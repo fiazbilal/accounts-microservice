@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package accountpb;
+
+option go_package = "github.com/fiazbilal/accounts-microservice/accountpb";
+
+message Account {
+  string id = 1;
+  string walletId = 2;
+  float balance = 3;
+}
+
+// Define gRPC services
+service AccountService {
+  rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse) {}
+  rpc GetAccounts(GetAccountsRequest) returns (stream GetAccountsResponse) {}
+  rpc GenerateAddress(GenerateAddressRequest) returns (GenerateAddressResponse) {}
+  rpc Deposit(DepositRequest) returns (DepositResponse) {}
+  rpc Withdraw(WithdrawRequest) returns (WithdrawResponse) {}
+}
+
+message CreateAccountRequest {
+  Account account = 1;
+}
+
+message CreateAccountResponse {
+  Account account = 1;
+}
+
+message GetAccountsRequest {}
+
+message GetAccountsResponse {
+  repeated Account accounts = 1;
+}
+
+message GenerateAddressRequest {}
+
+message GenerateAddressResponse {
+  string walletId = 1;
+}
+
+message DepositRequest {
+  string userId = 1;
+  float amount = 2;
+}
+
+message DepositResponse {
+  Account account = 1;
+}
+
+message WithdrawRequest {
+  string userId = 1;
+  float amount = 2;
+}
+
+message WithdrawResponse {
+  Account account = 1;
+}
